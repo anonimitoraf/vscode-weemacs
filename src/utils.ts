@@ -9,7 +9,9 @@ import { FindInFilesProps } from "./types";
  *                                      //      filesToExclude: ".test,.stories"}
  */
 export function parseSearchInput(searchInput: string): FindInFilesProps {
-  const [query, rest] = searchInput.split("#");
+  const [rawQuery = "", rest = ""] = searchInput.split("#");
+
+  const query = rawQuery.replace(/\s+/g, ".*");
 
   const fileFilters = rest.split(/\s+/g);
   const filesToInclude = fileFilters.filter((f) => !/^!.*/.test(f)).join(",");
